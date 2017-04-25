@@ -1,0 +1,17 @@
+﻿<UserControl x:Class="LostTech.App.KeyboardShortcutBox"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:app="clr-namespace:LostTech.App"
+             mc:Ignorable="d"
+             x:Name="LayoutRoot"
+             d:DesignHeight="40" d:DesignWidth="180">
+    <UserControl.Resources>
+        <app:KeyGestureValueConverter x:Key="KeyGestureConverter"/>
+    </UserControl.Resources>
+    <TextBox
+        HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+        Text="{Binding Shortcut, ElementName=LayoutRoot, Converter={StaticResource KeyGestureConverter}}"
+        />
+</UserControl>
