@@ -6,12 +6,36 @@
              xmlns:app="clr-namespace:LostTech.App"
              mc:Ignorable="d"
              x:Name="LayoutRoot"
-             d:DesignHeight="40" d:DesignWidth="180">
+             d:DesignHeight="40" d:DesignWidth="300"
+             >
     <UserControl.Resources>
         <app:KeyGestureValueConverter x:Key="KeyGestureConverter"/>
     </UserControl.Resources>
-    <TextBox
-        HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
-        Text="{Binding Shortcut, ElementName=LayoutRoot, Converter={StaticResource KeyGestureConverter}}"
-        />
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <TextBox
+            x:Name="KeyText"
+            HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+            Text="{Binding Shortcut, ElementName=LayoutRoot, Converter={StaticResource KeyGestureConverter}}"
+            PreviewKeyUp="TextBox_PreviewKeyUp"
+            IsReadOnly="{Binding IsCapturingGesture, ElementName=LayoutRoot}"
+            IsReadOnlyCaretVisible="False"
+            Background="Transparent"
+            AcceptsReturn="{Binding IsCapturingGesture, ElementName=LayoutRoot}"
+            AcceptsTab="{Binding IsCapturingGesture, ElementName=LayoutRoot}"
+            />
+        <Viewbox
+            Grid.Column="1"
+            Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}"
+            MinHeight="4" MinWidth="4"
+            >
+            <Button x:Name="EnterShortcutButton"
+                    Content="7" FontFamily="Wingdings"
+                    Click="EnterShortcutButton_Click"
+                    />
+        </Viewbox>
+    </Grid>
 </UserControl>

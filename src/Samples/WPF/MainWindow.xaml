@@ -7,8 +7,18 @@
         xmlns:ltapp="clr-namespace:LostTech.App;assembly=LostTech.App.KeySettings.WPF"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
+    <Window.Resources>
+        <ltapp:KeyGestureValueConverter x:Key="KeyGestureValueConverter"/>
+        <Style TargetType="ltapp:KeyboardShortcutBox">
+            <Style.Triggers>
+                <Trigger Property="IsCapturingGesture" Value="True">
+                    <Setter Property="Background" Value="{x:Static SystemColors.InfoBrush}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
     <StackPanel Orientation="Vertical" Margin="30">
-        <ltapp:KeyboardShortcutBox x:Name="Shortcut"/>
-        <TextBox Text="{Binding Shortcut,ElementName=Shortcut,Mode=OneWay,StringFormat=Key {0}}" IsReadOnly="True" IsReadOnlyCaretVisible="True"/>
+        <ltapp:KeyboardShortcutBox x:Name="Shortcut" Height="40" FontSize="24" />
+        <TextBox Text="{Binding Shortcut,ElementName=Shortcut,Mode=OneWay,Converter={StaticResource KeyGestureValueConverter}}" IsReadOnly="True" IsReadOnlyCaretVisible="True"/>
     </StackPanel>
 </Window>

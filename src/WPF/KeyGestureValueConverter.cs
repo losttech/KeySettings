@@ -29,7 +29,10 @@
             if (!this.converter.CanConvertFrom(value.GetType()))
                 throw new NotSupportedException();
 
-            return this.converter.ConvertFrom(null, culture, value);
+
+            return this.converter.IsValid(value)
+                ? this.converter.ConvertFrom(null, culture, value)
+                : Binding.DoNothing;
         }
     }
 }
