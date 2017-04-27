@@ -5,15 +5,32 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:app="clr-namespace:LostTech.App"
              mc:Ignorable="d"
+             x:Name="LayoutRoot"
              d:DesignHeight="300" d:DesignWidth="450">
-    <ListView>
+    <ListView x:Name="BindingList"
+              ItemsSource="{Binding}"
+              SelectionMode="Single"
+              KeyUp="BindingList_KeyUp"
+              >
         <ListView.View>
             <GridView>
-                <GridViewColumn Header="Command" Width="300" DisplayMemberBinding="{Binding CommandName}"/>
+                <GridViewColumn Header="Command" Width="300" DisplayMemberBinding="{Binding CommandName}">
+                    <GridViewColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock FontSize="24" Text="{Binding}"/>
+                        </DataTemplate>
+                    </GridViewColumn.CellTemplate>
+                </GridViewColumn>
                 <GridViewColumn Header="Shortcut" Width="Auto">
                     <GridViewColumn.CellTemplate>
                         <DataTemplate>
-                            <app:KeyboardShortcutBox Shortcut="{Binding Shortcut}"/>
+                            <app:KeyboardShortcutBox x:Name="ShortcutBox"
+                                                     Shortcut="{Binding Shortcut}"
+                                                     ShowEditButton="False"
+                                                     Width="100" Height="28"
+                                                     ExtendedCapture="{Binding ExtendedCapture, Source={x:Reference LayoutRoot}}"
+                                                     Loaded="ShortcutBox_Loaded"
+                                                     />
                         </DataTemplate>
                     </GridViewColumn.CellTemplate>
                 </GridViewColumn>

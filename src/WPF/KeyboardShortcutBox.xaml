@@ -4,12 +4,14 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:app="clr-namespace:LostTech.App"
+             BorderThickness="1"
              mc:Ignorable="d"
              x:Name="LayoutRoot"
              d:DesignHeight="40" d:DesignWidth="300"
              >
     <UserControl.Resources>
         <app:KeyStrokeValueConverter x:Key="KeyStrokeConverter"/>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
     </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -26,11 +28,14 @@
             Background="Transparent"
             AcceptsReturn="{Binding IsCapturingGesture, ElementName=LayoutRoot}"
             AcceptsTab="{Binding IsCapturingGesture, ElementName=LayoutRoot}"
+            BorderThickness="0"
+            ToolTip="{Binding Shortcut, ElementName=LayoutRoot, Converter={StaticResource KeyStrokeConverter}}"
             />
         <Viewbox
             Grid.Column="1"
             Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}"
             MinHeight="4" MinWidth="4"
+            Visibility="{Binding ShowEditButton, ElementName=LayoutRoot, Converter={StaticResource BooleanToVisibilityConverter}}"
             >
             <Button x:Name="EnterShortcutButton"
                     Content="7" FontFamily="Wingdings"

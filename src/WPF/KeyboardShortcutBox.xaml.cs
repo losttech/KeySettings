@@ -26,42 +26,27 @@
             set => this.SetValue(ShortcutProperty, value);
         }
 
-        // Using a DependencyProperty as the backing store for Shortcut.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty ShortcutProperty =
-            DependencyProperty.Register(nameof(Shortcut), typeof(KeyStroke), typeof(KeyboardShortcutBox),
-                new PropertyMetadata(null));
-
         public bool IsCapturingGesture {
             get => (bool) this.GetValue(IsCapturingGestureProperty);
             private set => this.SetValue(IsCapturingGestureProperty, value);
         }
 
-
-
         public bool ExtendedCapture {
-            get { return (bool)GetValue(ExtendedCaptureProperty); }
-            set { SetValue(ExtendedCaptureProperty, value); }
+            get => (bool) this.GetValue(ExtendedCaptureProperty);
+            set => this.SetValue(ExtendedCaptureProperty, value);
         }
 
-        // Using a DependencyProperty as the backing store for ExtendedCapture.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty ExtendedCaptureProperty =
-            DependencyProperty.Register("ExtendedCapture", typeof(bool), typeof(KeyboardShortcutBox),
-                new PropertyMetadata(false, propertyChangedCallback: ExtendedCapturePropertyChanged));
+        public bool ShowEditButton {
+            get => (bool)this.GetValue(ShowEditButtonProperty);
+            set => this.SetValue(ShowEditButtonProperty, value);
+        }
 
-        static void ExtendedCapturePropertyChanged(DependencyObject source, DependencyPropertyChangedEventArgs e)
+        public void BeginCapture()
         {
-            ((KeyboardShortcutBox)source).OnExtendedCaptureChanged((bool)e.NewValue);
+            Keyboard.Focus(this.KeyText);
+            this.IsCapturingGesture = true;
         }
 
-        protected virtual void OnExtendedCaptureChanged(bool newValue)
-        {
-            if (!this.IsCapturingGesture)
-                return;
-
-            this.StopGlobalHook();
-            if (newValue)
-                this.StartGlobalHook();
-        }
 
         void StopGlobalHook()
         {
@@ -117,10 +102,18 @@
 
         static bool IsWinDown() => Keyboard.IsKeyDown(Key.LWin) || Keyboard.IsKeyDown(Key.RWin);
 
+        // Using a DependencyProperty as the backing store for ShowEditButton.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty ShowEditButtonProperty =
+            DependencyProperty.Register(nameof(ShowEditButton), typeof(bool), typeof(KeyboardShortcutBox),
+                new PropertyMetadata(true));
         // Using a DependencyProperty as the backing store for IsCapturingGesture.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty IsCapturingGestureProperty =
             DependencyProperty.Register(nameof(IsCapturingGesture), typeof(bool), typeof(KeyboardShortcutBox),
                 new PropertyMetadata(false, propertyChangedCallback: IsCapturingGesturePropertyChanged));
+        // Using a DependencyProperty as the backing store for Shortcut.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty ShortcutProperty =
+            DependencyProperty.Register(nameof(Shortcut), typeof(KeyStroke), typeof(KeyboardShortcutBox),
+                new PropertyMetadata(null));
 
         protected override void OnIsKeyboardFocusWithinChanged(DependencyPropertyChangedEventArgs e)
         {
@@ -132,7 +125,7 @@
 
         protected virtual void OnIsCapturingGestureChanged(bool newValue)
         {
-            if (newValue && object.ReferenceEquals(this.EnterShortcutButton, Keyboard.FocusedElement))
+            if (newValue && ReferenceEquals(this.EnterShortcutButton, Keyboard.FocusedElement))
                 Keyboard.Focus(this.KeyText);
 
             this.StopGlobalHook();
@@ -163,8 +156,29 @@
         void EnterShortcutButton_Click(object sender, RoutedEventArgs e)
         {
             this.IsCapturingGesture = true;
-            if (object.ReferenceEquals(this.EnterShortcutButton, Keyboard.FocusedElement))
+            if (ReferenceEquals(this.EnterShortcutButton, Keyboard.FocusedElement))
                 Keyboard.Focus(this.KeyText);
         }
+
+        // Using a DependencyProperty as the backing store for ExtendedCapture.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty ExtendedCaptureProperty =
+            DependencyProperty.Register(nameof(ExtendedCapture), typeof(bool), typeof(KeyboardShortcutBox),
+                new PropertyMetadata(false, propertyChangedCallback: ExtendedCapturePropertyChanged));
+
+        static void ExtendedCapturePropertyChanged(DependencyObject source, DependencyPropertyChangedEventArgs e)
+        {
+            ((KeyboardShortcutBox)source).OnExtendedCaptureChanged((bool)e.NewValue);
+        }
+
+        protected virtual void OnExtendedCaptureChanged(bool newValue)
+        {
+            if (!this.IsCapturingGesture)
+                return;
+
+            this.StopGlobalHook();
+            if (newValue)
+                this.StartGlobalHook();
+        }
+
     }
 }

@@ -18,7 +18,10 @@
         </Style>
     </Window.Resources>
     <StackPanel Orientation="Vertical" Margin="30">
+        <ltapp:KeySettingsEditor x:Name="KeySettings" ExtendedCapture="True" />
+        <!--
         <ltapp:KeyboardShortcutBox x:Name="Shortcut" Height="40" FontSize="24" ExtendedCapture="True" />
         <TextBox Text="{Binding Shortcut,ElementName=Shortcut,Mode=OneWay,Converter={StaticResource KeyStrokeValueConverter}}" IsReadOnly="True" IsReadOnlyCaretVisible="True"/>
+        -->
     </StackPanel>
 </Window>

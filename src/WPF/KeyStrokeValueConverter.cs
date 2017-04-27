@@ -17,7 +17,7 @@
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             // hardcoding here, as converter.CanConvertTo for some stupid reason requires instance of ITypeDescriptorContext
-            if (targetType != typeof(string))
+            if (targetType != typeof(string) && targetType != typeof(object))
                 throw new NotSupportedException();
 
             if (value == null)
