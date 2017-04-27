@@ -6,31 +6,116 @@
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Input;
+    using Gma.System.MouseKeyHook;
+    using LostTech.App.Input;
 
     /// <summary>
     /// Interaction logic for KeyboardShortcutBox.xaml
     /// </summary>
     public partial class KeyboardShortcutBox : UserControl
     {
+        IKeyboardMouseEvents globalHook;
+
         public KeyboardShortcutBox()
         {
             this.InitializeComponent();
         }
 
-        public KeyGesture Shortcut {
-            get => (KeyGesture) this.GetValue(ShortcutProperty);
+        public KeyStroke Shortcut {
+            get => (KeyStroke) this.GetValue(ShortcutProperty);
             set => this.SetValue(ShortcutProperty, value);
         }
 
         // Using a DependencyProperty as the backing store for Shortcut.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty ShortcutProperty =
-            DependencyProperty.Register(nameof(Shortcut), typeof(KeyGesture), typeof(KeyboardShortcutBox),
+            DependencyProperty.Register(nameof(Shortcut), typeof(KeyStroke), typeof(KeyboardShortcutBox),
                 new PropertyMetadata(null));
 
         public bool IsCapturingGesture {
             get => (bool) this.GetValue(IsCapturingGestureProperty);
             private set => this.SetValue(IsCapturingGestureProperty, value);
         }
+
+
+
+        public bool ExtendedCapture {
+            get { return (bool)GetValue(ExtendedCaptureProperty); }
+            set { SetValue(ExtendedCaptureProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for ExtendedCapture.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty ExtendedCaptureProperty =
+            DependencyProperty.Register("ExtendedCapture", typeof(bool), typeof(KeyboardShortcutBox),
+                new PropertyMetadata(false, propertyChangedCallback: ExtendedCapturePropertyChanged));
+
+        static void ExtendedCapturePropertyChanged(DependencyObject source, DependencyPropertyChangedEventArgs e)
+        {
+            ((KeyboardShortcutBox)source).OnExtendedCaptureChanged((bool)e.NewValue);
+        }
+
+        protected virtual void OnExtendedCaptureChanged(bool newValue)
+        {
+            if (!this.IsCapturingGesture)
+                return;
+
+            this.StopGlobalHook();
+            if (newValue)
+                this.StartGlobalHook();
+        }
+
+        void StopGlobalHook()
+        {
+            this.globalHook?.Dispose();
+            this.globalHook = null;
+        }
+
+        void StartGlobalHook()
+        {
+            this.globalHook = Hook.GlobalEvents();
+            this.downKeys.Clear();
+            this.globalHook.KeyDown += this.GlobalKeyDown;
+            this.globalHook.KeyUp += this.GlobalKeyUp;
+        }
+
+        readonly HashSet<Key> downKeys = new HashSet<Key>();
+
+        void GlobalKeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
+        {
+            e.Handled = true;
+            Key key = AsWpf(e.KeyData);
+            this.downKeys.Add(key);
+            ModifierKeys modifiers = this.downKeys.Select(GetModifier).Aggregate((a, b) => a | b);
+            IEnumerable<Key> keys = this.downKeys.Where(k => GetModifier(k) == ModifierKeys.None);
+            this.Shortcut = new KeyStroke(modifiers, keys);
+        }
+
+        static Key AsWpf(System.Windows.Forms.Keys key) => KeyInterop.KeyFromVirtualKey((int) key);
+
+        void GlobalKeyUp(object sender, System.Windows.Forms.KeyEventArgs e)
+        {
+            e.Handled = true;
+            this.IsCapturingGesture = false;
+        }
+
+        static ModifierKeys GetModifier(Key key)
+        {
+            switch (key) {
+            case Key.LeftAlt: case Key.RightAlt:
+                return ModifierKeys.Alt;
+            case Key.LeftCtrl: case Key.RightCtrl:
+                return ModifierKeys.Control;
+            case Key.LeftShift: case Key.RightShift:
+                return ModifierKeys.Shift;
+            case Key.LWin: case Key.RWin:
+                return ModifierKeys.Windows;
+            default:
+                return ModifierKeys.None;
+            }
+        }
+        static ModifierKeys GetKeyboardModifiers()
+            => Keyboard.Modifiers | (IsWinDown() ? ModifierKeys.Windows : ModifierKeys.None);
+
+        static bool IsWinDown() => Keyboard.IsKeyDown(Key.LWin) || Keyboard.IsKeyDown(Key.RWin);
 
         // Using a DependencyProperty as the backing store for IsCapturingGesture.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty IsCapturingGestureProperty =
@@ -49,6 +134,10 @@
         {
             if (newValue && object.ReferenceEquals(this.EnterShortcutButton, Keyboard.FocusedElement))
                 Keyboard.Focus(this.KeyText);
+
+            this.StopGlobalHook();
+            if (this.ExtendedCapture && newValue)
+                this.StartGlobalHook();
         }
 
         static void IsCapturingGesturePropertyChanged(DependencyObject source, DependencyPropertyChangedEventArgs e)
@@ -66,15 +155,8 @@
                 return;
             }
 
-            try {
-                this.Shortcut = Keyboard.Modifiers == ModifierKeys.None
-                    ? new KeyGesture(e.Key)
-                    : new KeyGesture(e.Key, Keyboard.Modifiers);
-                e.Handled = true;
-            }
-            catch (NotSupportedException) {
-
-            }
+            this.Shortcut = new KeyStroke(e.Key, Keyboard.Modifiers);
+            e.Handled = true;
             this.IsCapturingGesture = false;
         }
 

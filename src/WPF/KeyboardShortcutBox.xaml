@@ -9,7 +9,7 @@
              d:DesignHeight="40" d:DesignWidth="300"
              >
     <UserControl.Resources>
-        <app:KeyGestureValueConverter x:Key="KeyGestureConverter"/>
+        <app:KeyStrokeValueConverter x:Key="KeyStrokeConverter"/>
     </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -19,7 +19,7 @@
         <TextBox
             x:Name="KeyText"
             HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
-            Text="{Binding Shortcut, ElementName=LayoutRoot, Converter={StaticResource KeyGestureConverter}}"
+            Text="{Binding Shortcut, ElementName=LayoutRoot, Converter={StaticResource KeyStrokeConverter}}"
             PreviewKeyUp="TextBox_PreviewKeyUp"
             IsReadOnly="{Binding IsCapturingGesture, ElementName=LayoutRoot}"
             IsReadOnlyCaretVisible="False"

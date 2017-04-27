@@ -3,13 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26403.7
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KeySettings", "src\KeySettings\KeySettings.csproj", "{37DEC813-C773-4217-BB32-8A08C76C3343}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPF", "src\WPF\WPF.csproj", "{F0F57D7C-F2AA-4046-9692-E30D896E8515}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{EC491D74-E74F-4D48-BFF1-CDFA96F9CB39}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPF", "src\Samples\WPF\WPF.csproj", "{A242B0AE-C752-4CAE-92BF-3A2A296AD0C2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "test\UnitTests\UnitTests.csproj", "{29B02522-2169-4AED-859E-A8BD9BC1F796}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{3CBA4AC3-DD02-432C-B5D0-14388D3545EF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MouseKeyHook", "..\..\OSS\MouseKeyHook\MouseKeyHook\MouseKeyHook.csproj", "{F52AA97E-180A-40ED-8F2B-09080171D6C7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +21,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{37DEC813-C773-4217-BB32-8A08C76C3343}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{37DEC813-C773-4217-BB32-8A08C76C3343}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{37DEC813-C773-4217-BB32-8A08C76C3343}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{37DEC813-C773-4217-BB32-8A08C76C3343}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F0F57D7C-F2AA-4046-9692-E30D896E8515}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F0F57D7C-F2AA-4046-9692-E30D896E8515}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F0F57D7C-F2AA-4046-9692-E30D896E8515}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -29,11 +29,20 @@ Global
 		{A242B0AE-C752-4CAE-92BF-3A2A296AD0C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A242B0AE-C752-4CAE-92BF-3A2A296AD0C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A242B0AE-C752-4CAE-92BF-3A2A296AD0C2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{29B02522-2169-4AED-859E-A8BD9BC1F796}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29B02522-2169-4AED-859E-A8BD9BC1F796}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{29B02522-2169-4AED-859E-A8BD9BC1F796}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29B02522-2169-4AED-859E-A8BD9BC1F796}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F52AA97E-180A-40ED-8F2B-09080171D6C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F52AA97E-180A-40ED-8F2B-09080171D6C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F52AA97E-180A-40ED-8F2B-09080171D6C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F52AA97E-180A-40ED-8F2B-09080171D6C7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{A242B0AE-C752-4CAE-92BF-3A2A296AD0C2} = {EC491D74-E74F-4D48-BFF1-CDFA96F9CB39}
+		{29B02522-2169-4AED-859E-A8BD9BC1F796} = {3CBA4AC3-DD02-432C-B5D0-14388D3545EF}
 	EndGlobalSection
 EndGlobal
