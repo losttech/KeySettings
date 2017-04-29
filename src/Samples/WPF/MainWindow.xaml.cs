@@ -15,7 +15,7 @@
         public MainWindow()
         {
             this.InitializeComponent();
-            this.KeySettings.DataContext = new ObservableCollection<CommandKeyBinding> {
+            var bindings = new ObservableCollection<CommandKeyBinding> {
                 new CommandKeyBinding {
                     CommandName = "42",
                 },
@@ -24,6 +24,9 @@
                     Shortcut = new KeyStroke(Key.T, ModifierKeys.Control),
                 },
             };
+            for (int i = 0; i < 30; i++)
+                bindings.Add(new CommandKeyBinding {CommandName = i.ToString()});
+            this.KeySettings.DataContext = bindings;
         }
     }
 }

@@ -7,34 +7,49 @@
              mc:Ignorable="d"
              x:Name="LayoutRoot"
              d:DesignHeight="300" d:DesignWidth="450">
-    <ListView x:Name="BindingList"
-              ItemsSource="{Binding}"
-              SelectionMode="Single"
-              KeyUp="BindingList_KeyUp"
-              >
-        <ListView.View>
-            <GridView>
-                <GridViewColumn Header="Command" Width="300" DisplayMemberBinding="{Binding CommandName}">
-                    <GridViewColumn.CellTemplate>
-                        <DataTemplate>
-                            <TextBlock FontSize="24" Text="{Binding}"/>
-                        </DataTemplate>
-                    </GridViewColumn.CellTemplate>
-                </GridViewColumn>
-                <GridViewColumn Header="Shortcut" Width="Auto">
-                    <GridViewColumn.CellTemplate>
-                        <DataTemplate>
+    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+        <ItemsControl x:Name="ShortcutList" ItemsSource="{Binding}" AlternationCount="2" BorderThickness="0">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Button x:Name="CommandNameContainer" Height="40"
+                                    BorderThickness="0"
+                                    Background="{x:Static SystemColors.WindowBrush}"
+                                    Tag="{Binding}"
+                                    HorizontalContentAlignment="Stretch"
+                                    Click="CommandNameContainer_Click"
+                                    >
+                        <Grid x:Name="ItemContaner">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock x:Name="CommandName"
+                                Text="{Binding CommandName}"
+                                FontSize="24"
+                                Padding="8,0"
+                                VerticalAlignment="Center"
+                                TextTrimming="WordEllipsis"
+                            />
                             <app:KeyboardShortcutBox x:Name="ShortcutBox"
-                                                     Shortcut="{Binding Shortcut}"
-                                                     ShowEditButton="False"
-                                                     Width="100" Height="28"
-                                                     ExtendedCapture="{Binding ExtendedCapture, Source={x:Reference LayoutRoot}}"
-                                                     Loaded="ShortcutBox_Loaded"
-                                                     />
-                        </DataTemplate>
-                    </GridViewColumn.CellTemplate>
-                </GridViewColumn>
-            </GridView>
-        </ListView.View>
-    </ListView>
+                                Grid.Column="1"
+                                Shortcut="{Binding Shortcut}"
+                                ShowEditButton="False"
+                                FontSize="20"
+                                BorderThickness="0"
+                                Padding="8,0"
+                                Height="40" MinWidth="80"
+                                Loaded="ShortcutBox_Loaded"
+                                ExtendedCapture="{Binding ExtendedCapture, Source={x:Reference LayoutRoot}}"
+                            />
+                        </Grid>
+                    </Button>
+                    <DataTemplate.Triggers>
+                        <Trigger Property="ItemsControl.AlternationIndex" Value="1">
+                            <Setter Property="Background" Value="#F0F0F0" TargetName="CommandNameContainer"/>
+                        </Trigger>
+                    </DataTemplate.Triggers>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </ScrollViewer>
 </UserControl>

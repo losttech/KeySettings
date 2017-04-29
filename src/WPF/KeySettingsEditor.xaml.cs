@@ -25,25 +25,18 @@
         public static readonly DependencyProperty ExtendedCaptureProperty =
             DependencyProperty.Register(nameof(ExtendedCapture), typeof(bool), typeof(KeySettingsEditor), new PropertyMetadata(false));
 
-        void BindingList_KeyUp(object sender, KeyEventArgs e)
+        void CommandNameContainer_Click(object sender, RoutedEventArgs e)
         {
-            if (e.Key == Key.Enter && Keyboard.Modifiers == ModifierKeys.None) {
-                var item = this.BindingList.SelectedItem;
-                if (item != null) {
-                    var itemContainer = (ListViewItem)this.BindingList.ItemContainerGenerator.ContainerFromItem(item);
-                    var keyBox = itemContainer.Tag as KeyboardShortcutBox;
-                    keyBox?.BeginCapture();
-                }
-                e.Handled = true;
-            }
+            var element = (FrameworkElement)sender;
+            var item = (ContentPresenter)this.ShortcutList.ItemContainerGenerator.ContainerFromItem(element.Tag);
+            ((KeyboardShortcutBox)item.Tag)?.BeginCapture();
         }
 
         void ShortcutBox_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
             var control = (Control)sender;
             var presenter = (ContentPresenter)control.TemplatedParent;
-            var item = (ListViewItem)this.BindingList.ItemContainerGenerator.ContainerFromItem(presenter.Content);
-            item.Tag = control;
+            presenter.Tag = control;
         }
     }
 }

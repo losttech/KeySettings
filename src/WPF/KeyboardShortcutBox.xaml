@@ -4,7 +4,6 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:app="clr-namespace:LostTech.App"
-             BorderThickness="1"
              mc:Ignorable="d"
              x:Name="LayoutRoot"
              d:DesignHeight="40" d:DesignWidth="300"
@@ -38,6 +37,7 @@
             Visibility="{Binding ShowEditButton, ElementName=LayoutRoot, Converter={StaticResource BooleanToVisibilityConverter}}"
             >
             <Button x:Name="EnterShortcutButton"
+                    Margin="2"
                     Content="7" FontFamily="Wingdings"
                     Click="EnterShortcutButton_Click"
                     />
