@@ -12,6 +12,8 @@
     /// </summary>
     public partial class MainWindow : Window
     {
+        public CommandKeyBinding TestShortcut{ get; } = new CommandKeyBinding("Test", new KeyStroke(Key.T));
+
         public MainWindow()
         {
             this.InitializeComponent();
@@ -19,10 +21,7 @@
                 new CommandKeyBinding {
                     CommandName = "42",
                 },
-                new CommandKeyBinding {
-                    CommandName = "Test",
-                    Shortcut = new KeyStroke(Key.T, ModifierKeys.Control),
-                },
+                this.TestShortcut,
             };
             for (int i = 0; i < 30; i++)
                 bindings.Add(new CommandKeyBinding {CommandName = i.ToString()});

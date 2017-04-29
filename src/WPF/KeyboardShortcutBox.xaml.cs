@@ -113,7 +113,7 @@
         // Using a DependencyProperty as the backing store for Shortcut.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty ShortcutProperty =
             DependencyProperty.Register(nameof(Shortcut), typeof(KeyStroke), typeof(KeyboardShortcutBox),
-                new PropertyMetadata(null));
+                new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
         protected override void OnIsKeyboardFocusWithinChanged(DependencyPropertyChangedEventArgs e)
         {

@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:WPF"
         xmlns:ltapp="clr-namespace:LostTech.App;assembly=LostTech.App.KeySettings.WPF"
         mc:Ignorable="d"
+        x:Name="LayoutRoot"
         Title="MainWindow" Height="350" Width="525">
     <Window.Resources>
         <ltapp:KeyStrokeValueConverter x:Key="KeyStrokeValueConverter"/>
@@ -17,9 +18,19 @@
             </Style.Triggers>
         </Style>
     </Window.Resources>
-    <ltapp:KeySettingsEditor x:Name="KeySettings" ExtendedCapture="True" Margin="20" />
+    <Grid Margin="20" >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <ltapp:KeyboardShortcutBox x:Name="Shortcut" Height="40" FontSize="24"
+                                   ExtendedCapture="True"
+                                   Shortcut="{Binding TestShortcut.Shortcut, ElementName=LayoutRoot}"
+                                   />
+        <ltapp:KeySettingsEditor Grid.Row="1" x:Name="KeySettings" ExtendedCapture="True" />
+    </Grid>
     <!--
-    <ltapp:KeyboardShortcutBox x:Name="Shortcut" Height="40" FontSize="24" ExtendedCapture="True" />
+
     <TextBox Text="{Binding Shortcut,ElementName=Shortcut,Mode=OneWay,Converter={StaticResource KeyStrokeValueConverter}}" IsReadOnly="True" IsReadOnlyCaretVisible="True"/>
     -->
 </Window>
