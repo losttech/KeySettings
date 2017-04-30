@@ -7,13 +7,17 @@
              mc:Ignorable="d"
              x:Name="LayoutRoot"
              d:DesignHeight="300" d:DesignWidth="450">
-    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
-        <ItemsControl x:Name="ShortcutList" ItemsSource="{Binding}" AlternationCount="2" BorderThickness="0">
+    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled"
+                  Background="Transparent"
+                  >
+        <ItemsControl x:Name="ShortcutList" ItemsSource="{Binding}" AlternationCount="2"
+                      BorderThickness="0" Background="Transparent"
+                      >
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <Button x:Name="CommandNameContainer" Height="40"
                                     BorderThickness="0"
-                                    Background="{x:Static SystemColors.WindowBrush}"
+                                    Background="{StaticResource ControlBackgroundBrush}"
                                     Tag="{Binding}"
                                     HorizontalContentAlignment="Stretch"
                                     Click="CommandNameContainer_Click"
@@ -45,7 +49,7 @@
                     </Button>
                     <DataTemplate.Triggers>
                         <Trigger Property="ItemsControl.AlternationIndex" Value="1">
-                            <Setter Property="Background" Value="#F0F0F0" TargetName="CommandNameContainer"/>
+                            <Setter Property="Background" Value="{StaticResource AlternateControlBackgroundBrush}" TargetName="CommandNameContainer"/>
                         </Trigger>
                     </DataTemplate.Triggers>
                 </DataTemplate>

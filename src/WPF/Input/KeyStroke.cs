@@ -68,6 +68,20 @@
 
         public override string ToString() => this.ToString(CultureInfo.InvariantCulture);
 
+        public override bool Equals(object obj)
+        {
+            if (obj is KeyStroke other)
+                return this.Equals(other);
+
+            return false;
+        }
+
+        public bool Equals(KeyStroke other)
+        {
+            return other?.Modifiers == this.Modifiers
+                && new SortedSet<Key>(this.Keys).SetEquals(new SortedSet<Key>(other.Keys));
+        }
+
         void OnPropertyChanged([CallerMemberName] string propertyName = null) =>
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
