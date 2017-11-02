@@ -5,7 +5,7 @@
     using System.ComponentModel;
     using System.Linq;
     using System.Runtime.CompilerServices;
-    using LostTech.App.Annotations;
+    using JetBrains.Annotations;
     using LostTech.App.Input;
 
     public sealed class CommandKeyBinding: INotifyPropertyChanged

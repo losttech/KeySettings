@@ -76,6 +76,9 @@
             return false;
         }
 
+        public override int GetHashCode()
+            => this.Modifiers.GetHashCode() * 37 + this.Keys.Sum(k => k.GetHashCode());
+
         public bool Equals(KeyStroke other)
         {
             return other?.Modifiers == this.Modifiers
