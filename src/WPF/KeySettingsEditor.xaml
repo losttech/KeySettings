@@ -17,7 +17,7 @@
                 <DataTemplate>
                     <Button x:Name="CommandNameContainer" Height="40"
                                     BorderThickness="0"
-                                    Background="{StaticResource ControlBackgroundBrush}"
+                                    Background="{Binding Background, ElementName=LayoutRoot}"
                                     Tag="{Binding}"
                                     HorizontalContentAlignment="Stretch"
                                     Click="CommandNameContainer_Click"
