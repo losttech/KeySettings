@@ -1,5 +1,6 @@
 ﻿namespace LostTech.App.Input
 {
+    using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.ComponentModel;
@@ -9,7 +10,8 @@
     using System.Text;
     using System.Windows.Input;
 
-    public sealed class KeyStroke: INotifyPropertyChanged
+    [TypeConverter(typeof(KeyStrokeTypeConverter))]
+    public sealed class KeyStroke: INotifyPropertyChanged, IEquatable<KeyStroke>
     {
         public KeyStroke() { }
 
