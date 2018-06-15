@@ -32,7 +32,7 @@
             />
         <Viewbox
             Grid.Column="1"
-            Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}"
+            Stretch="Uniform"
             MinHeight="4" MinWidth="4"
             Visibility="{Binding ShowEditButton, ElementName=LayoutRoot, Converter={StaticResource BooleanToVisibilityConverter}}"
             >
