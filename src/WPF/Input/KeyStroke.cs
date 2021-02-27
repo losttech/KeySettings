@@ -27,7 +27,7 @@
                 this.Keys.Add(key);
         }
 
-        public KeyStroke(ModifierKeys modifiers, IEnumerable<Key> keys = null)
+        public KeyStroke(ModifierKeys modifiers, IEnumerable<Key>? keys = null)
         {
             this.Modifiers = modifiers;
 
@@ -70,7 +70,7 @@
 
         public override string ToString() => this.ToString(CultureInfo.InvariantCulture);
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             if (obj is KeyStroke other)
                 return this.Equals(other);
@@ -81,15 +81,15 @@
         public override int GetHashCode()
             => this.Modifiers.GetHashCode() * 37 + this.Keys.Sum(k => k.GetHashCode());
 
-        public bool Equals(KeyStroke other)
+        public bool Equals(KeyStroke? other)
         {
             return other?.Modifiers == this.Modifiers
                 && new SortedSet<Key>(this.Keys).SetEquals(new SortedSet<Key>(other.Keys));
         }
 
-        void OnPropertyChanged([CallerMemberName] string propertyName = null) =>
+        void OnPropertyChanged([CallerMemberName] string? propertyName = null) =>
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
     }
 }

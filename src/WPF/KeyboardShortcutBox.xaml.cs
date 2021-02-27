@@ -14,7 +14,7 @@
     /// </summary>
     public partial class KeyboardShortcutBox : UserControl
     {
-        IKeyboardMouseEvents globalHook;
+        IKeyboardMouseEvents? globalHook;
 
         public KeyboardShortcutBox()
         {
@@ -64,7 +64,7 @@
 
         readonly HashSet<Key> downKeys = new HashSet<Key>();
 
-        void GlobalKeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
+        void GlobalKeyDown(object? sender, System.Windows.Forms.KeyEventArgs e)
         {
             e.Handled = true;
             Key key = AsWpf(e.KeyData);
@@ -76,7 +76,7 @@
 
         static Key AsWpf(System.Windows.Forms.Keys key) => KeyInterop.KeyFromVirtualKey((int) key);
 
-        void GlobalKeyUp(object sender, System.Windows.Forms.KeyEventArgs e)
+        void GlobalKeyUp(object? sender, System.Windows.Forms.KeyEventArgs e)
         {
             e.Handled = true;
             this.IsCapturingGesture = false;

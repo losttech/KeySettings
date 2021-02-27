@@ -29,7 +29,7 @@
             throw new NotSupportedException();
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        public object? ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value == null)
                 return DependencyProperty.UnsetValue;
@@ -43,7 +43,7 @@
             return this.ParseStroke(keyString, culture) ?? Binding.DoNothing;
         }
 
-        public KeyStroke ParseStroke(string keyString, CultureInfo culture = null)
+        public KeyStroke? ParseStroke(string keyString, CultureInfo? culture = null)
         {
             string keys = keyString;
             ModifierKeys modifiers = ModifierKeys.None;

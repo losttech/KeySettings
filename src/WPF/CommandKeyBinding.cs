@@ -5,23 +5,25 @@
     using System.ComponentModel;
     using System.Linq;
     using System.Runtime.CompilerServices;
+
     using JetBrains.Annotations;
+
     using LostTech.App.Input;
 
     public sealed class CommandKeyBinding: INotifyPropertyChanged
     {
-        string commandName;
-        KeyStroke shortcut;
+        string? commandName;
+        KeyStroke? shortcut;
 
         public CommandKeyBinding() { }
 
-        public CommandKeyBinding(string commandName, [NotNull] KeyStroke shortcut)
+        public CommandKeyBinding(string commandName, KeyStroke shortcut)
         {
             this.commandName = commandName ?? throw new ArgumentNullException(nameof(commandName));
             this.shortcut = shortcut ?? throw new ArgumentNullException(nameof(shortcut));
         }
 
-        public string CommandName
+        public string? CommandName
         {
             get => this.commandName;
             set {
@@ -32,7 +34,7 @@
             }
         }
 
-        public KeyStroke Shortcut
+        public KeyStroke? Shortcut
         {
             get => this.shortcut;
             set {
@@ -43,10 +45,10 @@
             }
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         [NotifyPropertyChangedInvocator]
-        void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        void OnPropertyChanged([CallerMemberName] string? propertyName = null)
             => this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 }
