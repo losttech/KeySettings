@@ -4,7 +4,7 @@
     <OutputType>library</OutputType>
     <RootNamespace>LostTech.App</RootNamespace>
     <AssemblyName>LostTech.App.KeySettings.WPF</AssemblyName>
-    <TargetFramework>net6.0-windows</TargetFramework>
+    <TargetFramework>net8.0-windows</TargetFramework>
     <FileAlignment>512</FileAlignment>
     <UseWPF>true</UseWPF>
     <UseWindowsForms>true</UseWindowsForms>
